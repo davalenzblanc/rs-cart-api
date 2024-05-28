@@ -1,3 +1,24 @@
+create table carts (
+	id uuid not null primary key,
+	created_at date not null,
+	updated_at date not null,
+	status statuses not null
+);
+
+create table products (
+	id uuid not null primary key,
+	title varchar(255) not null,
+	description varchar not null,
+	price decimal(5,2) not null
+);
+
+create table users (
+	id uuid not null primary key,
+	name varchar(255) not null,
+	email varchar(255) not null,
+	password varchar(255) not null
+)
+
 INSERT INTO users (id, name, email, password) VALUES
 (gen_random_uuid(), 'Alice', 'alice@example.com', 'password123'),
 (gen_random_uuid(), 'Bob', 'bob@example.com', 'password456'),
