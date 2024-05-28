@@ -29,7 +29,8 @@ export class CartController {
   @Get()
   async findUserCart(@Req() req: AppRequest) {
     const cart = await this.cartService.findOrCreateByUserId(
-      getUserIdFromRequest(req),
+      // getUserIdFromRequest(req),
+      'f4ea6b91-7929-4811-a910-d4d788a901e4',
     );
 
     return {

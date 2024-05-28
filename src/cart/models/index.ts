@@ -1,47 +1,72 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  HasMany,
+  ForeignKey,
+  BelongsTo,
+  DataType,
+} from 'sequelize-typescript';
 
 @Table
 export class Product extends Model {
-  @Column
+  @PrimaryKey
+  @Column(DataType.UUID)
   id: string;
 
-  @Column
+  @Column(DataType.STRING)
   title: string;
 
-  @Column
+  @Column(DataType.TEXT)
   description: string;
 
-  @Column
+  @Column(DataType.FLOAT)
   price: number;
+
+  @HasMany(() => CartItem)
+  cartItems: CartItem[];
 }
 
+@Table
 export class Cart extends Model {
-  @Column
+  @PrimaryKey
+  @Column(DataType.UUID)
   id: string;
 
-  @Column
+  @Column(DataType.UUID)
   user_id: string;
 
-  @Column
+  @Column(DataType.STRING)
   status: string;
 
-  @Column
+  @Column(DataType.DATE)
   created_at: Date;
 
-  @Column
+  @Column(DataType.DATE)
   updated_at: Date;
 }
 
+@Table
 export class CartItem extends Model {
-  @Column
+  @PrimaryKey
+  @Column(DataType.UUID)
   id: string;
 
-  @Column
-  card_id: string;
+  @ForeignKey(() => Cart)
+  @Column(DataType.UUID)
+  cart_id: string;
 
-  @Column
+  @ForeignKey(() => Product)
+  @Column(DataType.UUID)
   product_id: string;
 
-  @Column
-  count: string;
+  @Column(DataType.INTEGER)
+  count: number;
+
+  @BelongsTo(() => Cart)
+  cart: Cart;
+
+  @BelongsTo(() => Product)
+  product: Product;
 }
